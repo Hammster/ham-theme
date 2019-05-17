@@ -5,10 +5,10 @@
 function Write-Theme {
 
   param(
-      [bool]
-      $lastCommandFailed,
-      [string]
-      $with
+    [bool]
+    $lastCommandFailed,
+    [string]
+    $with
   )    
 
   # Info Icons ---------------------------------------------------------------
@@ -19,12 +19,12 @@ function Write-Theme {
   
   #check for elevated prompt
   If (Test-Administrator) {
-      $symbolColor = $sl.Colors.AdminIconForegroundColor
+    $symbolColor = $sl.Colors.AdminIconForegroundColor
   }
 
   #something went wrong
   If ($lastCommandFailed -and $slSettings.ShowErrorColorInSymbol) {
-      $symbolColor = $sl.Colors.CommandFailedIconForegroundColor
+    $symbolColor = $sl.Colors.CommandFailedIconForegroundColor
   }
 
   $prompt = Write-Prompt -Object $sl.PromptSymbols.StartSymbol -ForegroundColor $symbolColor
@@ -34,14 +34,14 @@ function Write-Theme {
   $user = [System.Environment]::UserName
   
   if (Test-NotDefaultUser($user)) {
-      $prompt += Write-Prompt -Object " $user " -ForegroundColor $sl.Colors.UserColor -BackgroundColor $sl.Colors.Background
+    $prompt += Write-Prompt -Object " $user " -ForegroundColor $sl.Colors.UserColor
   }
 
   if (Test-VirtualEnv) {
-      $prompt += Write-Prompt -Object "$($sl.PromptSymbols.VirtualEnvSymbol) $(Get-VirtualEnvName) " -ForegroundColor $sl.Colors.VirtualEnvBackgroundColor
+    $prompt += Write-Prompt -Object "$($sl.PromptSymbols.VirtualEnvSymbol) $(Get-VirtualEnvName) " -ForegroundColor $sl.Colors.VirtualEnvBackgroundColor
   }
   else {
-      $prompt += Write-Prompt -Object "$($sl.PromptSymbols.SegmentForwardSymbol) "  -ForegroundColor $sl.Colors.SegmentSymbolColor
+    $prompt += Write-Prompt -Object "$($sl.PromptSymbols.SegmentForwardSymbol) "  -ForegroundColor $sl.Colors.SegmentSymbolColor
   }
 
   # Path ---------------------------------------------------------------------
@@ -53,14 +53,14 @@ function Write-Theme {
   
   $status = Get-VCSStatus
   if ($status) {
-      $prompt += Write-Prompt -Object " $($sl.PromptSymbols.SegmentForwardSymbol) " -ForegroundColor $sl.Colors.SegmentSymbolColor
-      $themeInfo = Get-VcsInfo -status ($status)
-      $prompt += Write-Prompt -Object " $($themeInfo.VcInfo) " -ForegroundColor $sl.Colors.VCSColor
+    $prompt += Write-Prompt -Object " $($sl.PromptSymbols.SegmentForwardSymbol) " -ForegroundColor $sl.Colors.SegmentSymbolColor
+    $themeInfo = Get-VcsInfo -status ($status)
+    $prompt += Write-Prompt -Object " $($themeInfo.VcInfo) " -ForegroundColor $sl.Colors.VCSColor
   }
 
   if ($with) {
-      $prompt += Write-Prompt -Object $sl.PromptSymbols.SegmentForwardSymbol  -ForegroundColor $sl.Colors.SegmentSymbolColor
-      $prompt += Write-Prompt -Object " $($with.ToUpper()) " -ForegroundColor $sl.Colors.VCSColor
+    $prompt += Write-Prompt -Object $sl.PromptSymbols.SegmentForwardSymbol  -ForegroundColor $sl.Colors.SegmentSymbolColor
+    $prompt += Write-Prompt -Object " $($with.ToUpper()) " -ForegroundColor $sl.Colors.VCSColor
   }
 
   # Input Line ---------------------------------------------------------------
